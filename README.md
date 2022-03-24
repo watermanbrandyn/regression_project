@@ -59,9 +59,9 @@ _Initial Business Questions_
 - In what ways can this knowledge benefit Zillow and their clients? 
 
 _Initial Hypotheses_
-1. Is there a linear relationship between tax value and our core physical attributes? (Three separate Pearson investigations)
-2. Is there a difference in tax values by geographic attributes? (Various T-Test/ANOVA investigations)
-3. Is there independence between tax value and add-on components? (Various Chi-Square investigations)
+- Is there a linear relationship between tax value and our core physical attributes? (Three separate Pearson investigations)
+- Is there a difference in tax values by geographic attributes? (Various T-Test/ANOVA investigations)
+- Is there independence between tax value and add-on components? (Various Chi-Square investigations)
 
 ## Data Dictionary (Not Done)
 | Attribute                             | Definition                                      | Data Type | Additional Info    |
