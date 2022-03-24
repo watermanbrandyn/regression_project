@@ -60,8 +60,8 @@ _Initial Business Questions_
 
 _Initial Hypotheses_
 - Is there a linear relationship between tax value and our core physical attributes? (Three separate Pearson investigations)
-- Is there a difference in tax values by geographic attributes? (Various T-Test/ANOVA investigations)
-- Is there independence between tax value and add-on components? (Various Chi-Square investigations)
+- Is there a difference in tax values by geographic attributes? (Various T-Tests/ANOVA investigations)
+- Is there a difference in tax values and having add-on components? (Various T-Tests)
 
 ## Data Dictionary (Not Done)
 | Attribute                             | Definition                                      | Data Type | Additional Info    |
@@ -101,14 +101,14 @@ _Initial Hypotheses_
 
 Not shown but present through encoding: internet_service_type_DSL, contract_type_none (Month to month), payment_type_Bank transfer (auto)
 
-## Project Plan (Not Done)
+## Project Plan 
 This project will start with some initial planning and question exploration before we even access the data. The question exploration has been delved out in the _Initial Questions_ section. 
 Additionally let us detail what is to be provided at the conclusion of this project:
  - This README.md
  - Final Report.ipynb 
  - Workbooks and modules used
 
-Moving forward we will **wrangle (acquire/prepare)** our data, **explore** for insights on key drivers, create **models** for prediction, and apply the best ones for the purpose of curating some **predictions**. This will all be **summarized** and **recommendations** for Telco will be provided. 
+Moving forward we will **wrangle (acquire/prepare)** our data, **explore** for insights on key drivers, create **models** for prediction, and apply the best ones for the purpose of curating some **predictions**. This will all be **summarized** and **recommendations** for Zillow will be provided. 
 For a more detailed breakdown of these steps please see the Final Report and workbooks provided. 
 
 ### Wrangling (Not Done)
