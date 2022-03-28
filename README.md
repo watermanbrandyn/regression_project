@@ -147,7 +147,7 @@ The modules included in this project are:
 #### Predictions (Not Done)
 The random_forest_csv() function in our model module will output the predictions for our test set from our best performing Random Forest model. It contains customer_id, prediction, and prediction probability. 
 
-## Summary and Recommendations (Not Done)
+### Summary and Recommendations (Not Done)
 We were successful at identifying some key drivers of churn that were:
 - Having Fiber service (Phone and Internet)
 - Not having a contract
