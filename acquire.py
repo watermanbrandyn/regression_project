@@ -66,13 +66,15 @@ def larger_acquire_zillow(use_cache = True):
     # Query to refine what data we want to grab
     # Grabbing all columns this time
     query = '''
-    SELECT * 
+    SELECT *
     FROM properties_2017
     LEFT JOIN propertylandusetype USING(propertylandusetypeid)
     JOIN predictions_2017 USING(parcelid)
     WHERE propertylandusedesc IN ("Single Family Residential", "Inferred Single Family Residential")
     AND transactiondate LIKE "2017%%"
     '''
+    # Dropping extra ID columns
+    df = df.drop(columns = 'id')
     # Acquisition and creation of dataframe
     df = pd.read_sql(query, get_db_url('zillow'))
     # Creation of csv file
