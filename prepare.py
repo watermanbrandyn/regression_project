@@ -8,20 +8,31 @@ from sklearn.impute import SimpleImputer
 
 def prepare_zillow(df):
     '''
+    This function takes in the dataframe and returns the train, validate, and test dataframe splits.
+    It drops the nulls prior to the split.
     '''
-
-
-
-
-
+    # Drop the null values
+    df = df.dropna()
+    train, validate, test = zillow_split(df)
+    return train, validate, test
 
 
 def prepare_zillow_l(df):
     '''
     '''
-    # Removal of large null columns or ones that compromise integrity of target variable
-    df = df.drop(columns= ['airconditioningtypeid', 'architecturalstyletypeid', 'landtaxvaluedollarcnt',
-                            'structuretaxvaluedollarcnt', 'taxamount'])
+    # Removal of columns that compromise integrity of target variable
+    df = df.drop(columns= ['landtaxvaluedollarcnt', 'structuretaxvaluedollarcnt', 'taxamount'])
+    # Removal of columns that have very high null ratio
+    for col in df:
+        if df[col].isna().sum() >= (.25 * len(df)):
+            df = df.drop(columns = col)
+    # Dropping rows with null values out of remaning columns
+    df = df.dropna()
+    # Dropping redundant, unnecessary, or faulty columns
+    df = df.drop(columns = ['parcelid', 'propertylandusetypeid', 'calculatedbathnbr', 'finishedsquarefeet12', 'fullbathcnt',
+                            'latitude', 'longitude', 'propertycountylandusecode', 'rawcensustractandblock',
+                            'roomcnt', 'regionidzip', 'assessmentyear', 'censustractandblock', 'logerror', 
+                            'propertylandusedesc', 'regionidcounty'])
     
 
 
@@ -43,3 +54,5 @@ def zillow_split(df):
                                             random_state=123)
     # Return train, validate, test (56%, 24%, 20% splits of original df)
     return train, validate, test
+
+
