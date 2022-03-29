@@ -30,7 +30,6 @@ def acquire_zillow(use_cache = True):
     # If data is not local we will acquire it from SQL server
     print('Acquiring data from SQL db')
     # Query to refine what data we want to grab
-    # bedroomcnt, bathroomcnt, calculatedfinishedsquarefeet, taxvaluedollarcnt
     query = '''
     SELECT bedroomcnt, bathroomcnt, calculatedfinishedsquarefeet, lotsizesquarefeet, fips, yearbuilt, taxvaluedollarcnt
     FROM properties_2017
