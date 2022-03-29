@@ -18,7 +18,7 @@ def get_db_url(db_name, username=user, hostname=host, password=password):
     return url
 
 
-def basic_acquire_zillow(use_cache = True):
+def acquire_zillow(use_cache = True):
     '''
     This function returns a dataframe that is constructed from a SQL query gathering Zillow data. It checks if there is already a local csv file
     with the Zillow data, and will create one if none is present. (This gathers select columns)
@@ -32,7 +32,7 @@ def basic_acquire_zillow(use_cache = True):
     # Query to refine what data we want to grab
     # bedroomcnt, bathroomcnt, calculatedfinishedsquarefeet, taxvaluedollarcnt
     query = '''
-    SELECT bedroomcnt, bathroomcnt, calculatedfinishedsquarefeet, taxvaluedollarcnt
+    SELECT bedroomcnt, bathroomcnt, calculatedfinishedsquarefeet, lotsizesquarefeet, fips, yearbuilt, taxvaluedollarcnt
     FROM properties_2017
     LEFT JOIN propertylandusetype USING(propertylandusetypeid)
     JOIN predictions_2017 USING(parcelid)
@@ -44,7 +44,8 @@ def basic_acquire_zillow(use_cache = True):
     # Renaming columns 
     df = df.rename(columns =   {'bedroomcnt': 'bedrooms',
                                 'bathroomcnt': 'bathrooms',
-                                'calculatedfinishedsquarefeet': 'area',
+                                'calculatedfinishedsquarefeet': 'house_area',
+                                'lotsizesquarefeet': 'lot_area',
                                 'taxvaluedollarcnt': 'tax_value'})    
     # Creation of csv file
     df.to_csv('zillow.csv', index=False)
@@ -52,32 +53,3 @@ def basic_acquire_zillow(use_cache = True):
     return df
 
 
-def larger_acquire_zillow(use_cache = True):
-    '''
-    This function returns a dataframe taht is constructed from a SQL query gathering Zillow data. It checks if there is already a local csv file
-    with the Zillow data, and will create one if none is present. (This gathers all columns)
-    '''
-    # Checking to see if data already exists in local csv file
-    if os.path.exists('zillow_large.csv') and use_cache:
-        print('Using cached csv')
-        return pd.read_csv('zillow_large.csv')
-    # If data is not local we will acquire it from SQL server
-    print('Acquiring data from SQL db')
-    # Query to refine what data we want to grab
-    # Grabbing all columns this time
-    query = '''
-    SELECT *
-    FROM properties_2017
-    LEFT JOIN propertylandusetype USING(propertylandusetypeid)
-    JOIN predictions_2017 USING(parcelid)
-    WHERE propertylandusedesc IN ("Single Family Residential", "Inferred Single Family Residential")
-    AND transactiondate LIKE "2017%%"
-    '''
-    # Dropping extra ID columns
-    df = df.drop(columns = 'id')
-    # Acquisition and creation of dataframe
-    df = pd.read_sql(query, get_db_url('zillow'))
-    # Creation of csv file
-    df.to_csv('zillow_large.csv', index=False)
-    # Returning the df
-    return df
