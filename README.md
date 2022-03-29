@@ -27,14 +27,14 @@ There are a number of factors that can influence the tax value of a property. Th
 
 Through the identification of key drivers, application of these drivers to models, and the testing of prediction capabilities we can help Zillow obtain an advantage in the acquistion and sales of real-estate. This in turn can help Zillow attain a reputation of having a better understanding of the volatility behind pricing, and ensure the company remains a leader in both consultation regarding, and movement of, the housing marketplace. 
 
-## How to Reproduce - (Not Done)
+## How to Reproduce 
 To reproduce the outcomes in this project:
-1. Have an env.py file with credentials (hostname, username, password) to access a SQL database that contains Telco data. Codeup's 'telco_churn' data was utilized
+1. Have an env.py file with credentials (hostname, username, password) to access a SQL database that contains Telco data. Codeup's 'zillow' data was utilized
    for this project. 
 2. Clone this repo and ensure you have all of the necessary modules and notebooks. Confirm that the .gitignore includes your env.py file to secure credentials.
 3. Use of these libraries: pandas, numpy, matplotlib, seaborn, sklearn.
 4. Be able to run the 'Final Report' jupyter notebook file. 
-   - Supplemental 'classification_workbook' may also be useful in identifying some of the steps taken prior to the cleaner final code 
+   - Supplemental 'regression_workbook' may also be useful in identifying some of the steps taken prior to the cleaner final code 
 
 ## Initial Questions
 _What is our minimum viable product? (MVP)_
@@ -63,43 +63,16 @@ _Initial Hypotheses_
 - Is there a difference in tax values by geographic attributes? (Various T-Tests/ANOVA investigations)
 - Is there a difference in tax values and having add-on components? (Various T-Tests)
 
-## Data Dictionary (Not Done)
-| Attribute                             | Definition                                      | Data Type | Additional Info    |
-|:--------------------------------------|:------------------------------------------------|:---------:|:-------------------|
-| customer_id                           | Unique ID for each customer                     | object    | Format: 0000-AAAAA |
-| senior_citizen                        | If customer is a senior                         | int64     | 0: No, 1: Yes      |
-| tenure                                | Duration customer has been with Telco           | int64     | In months, 1-72    |
-| monthly_charges                       | Total in $ a customer pays each month           | float64   | Range: 18.25-118.75 | 
-| total_charges                         | Total in $ of customer to date                  | float64   | Range: 18.80-8684.80 |
-| gender_Male                           | If customer is a male                           | uint8     | 0: No, 1: Yes      |  
-| partner_Yes                           | If customer has a partner                       | uint8     | 0: No, 1: Yes      |  
-| dependents_Yes                        | If customer has dependents                      | uint8     | 0: No, 1: Yes      |  
-| phone_service_Yes                     | If customer has phone service                   | uint8     | 0: No, 1: Yes      |  
-| multiple_lines_No phone service       | If customer has multiple phone lines (no phone) | uint8     | 0: No, 1: Yes      |  
-| multiple_lines_Yes                    | If customer has multiple phone lines            | uint8     | 0: No, 1: Yes      |  
-| online_security_No internet service   | If customer has online security (no internet)   | uint8     | 0: No, 1: Yes      |  
-| online_security_Yes                   | If customer has online security                 | uint8     | 0: No, 1: Yes      |   
-| online_backup_No internet service     | If customer has online backup (no internet)     | uint8     | 0: No, 1: Yes      |  
-| online_backup_Yes                     | If customer has online backup                   | uint8     | 0: No, 1: Yes      |  
-| device_protection_No internet service | If customer has device protection (no internet) | uint8     | 0: No, 1: Yes      | 
-| device_protection_Yes                 | If customer has device protection               | uint8     | 0: No, 1: Yes      |  
-| tech_support_No internet service      | If customer has tech support (no internet)      | uint8     | 0: No, 1: Yes      |  
-| tech_support_Yes                      | If customer has tech support                    | uint8     | 0: No, 1: Yes      |  
-| streaming_tv_No internet service      | If customer has streaming tv (no internet)      | uint8     | 0: No, 1: Yes      |  
-| streaming_tv_Yes                      | If customer has streaming tv                    | uint8     | 0: No, 1: Yes      |  
-| streaming_movies_No internet service  | If customer has streaming movies (no internet)  | uint8     | 0: No, 1: Yes      |  
-| streaming_movies_Yes                  | If customer has streaming movies                | uint8     | 0: No, 1: Yes      |  
-| paperless_billing_Yes                 | If customer has paperless billing               | uint8     | 0: No, 1: Yes      |  
-| churn_Yes                             | If customer has churned                         | uint8     | 0: No, 1: Yes      |  
-| internet_service_type_Fiber optic     | If customer has Fiber for internet service      | uint8     | 0: No, 1: Yes      |  
-| internet_service_type_None            | If customer does not have internet service      | uint8     | 0: No, 1: Yes      |  
-| contract_type_One year                | If customer contract is for one year            | uint8     | 0: No, 1: Yes      |  
-| contract_type_Two year                | If customer contract is for two years           | uint8     | 0: No, 1: Yes      |  
-| payment_type_Credit card (automatic)  | If customer payment type is credit card (auto)  | uint8     | 0: No, 1: Yes      |  
-| payment_type_Electronic check         | If customer payment type is electronic check    | uint8     | 0: No, 1: Yes      |  
-| payment_type_Mailed check             | If customer payment type is mailed check        | uint8     | 0: No, 1: Yes      |
-
-Not shown but present through encoding: internet_service_type_DSL, contract_type_none (Month to month), payment_type_Bank transfer (auto)
+## Data Dictionary
+| Attribute                             | Definition                                        | Data Type | Additional Info     |
+|:--------------------------------------|:--------------------------------------------------|:---------:|:--------------------|
+| bedrooms                              | Number of bedrooms                                | Float     | Scaled              |
+| bathrooms                             | Number of bathrooms                               | Float     | Scaled              |
+| house_area                            | Square feet of house                              | Float     | Scaled              |
+| lot_area                              | Square feet of lot                                | Float     | Scaled              |
+| tax_value                             | House value for tax purposes                      | Float     | Target variable     |
+| age                                   | Age of house                                      | Float     | Scaled              |
+| fips                                  | Federal Information Processing Standards (county) | uint8     | Three unique values |
 
 ## Project Plan 
 This project will start with some initial planning and question exploration before we even access the data. The question exploration has been delved out in the _Initial Questions_ section. 
@@ -111,13 +84,13 @@ Additionally let us detail what is to be provided at the conclusion of this proj
 Moving forward we will **wrangle (acquire/prepare)** our data, **explore** for insights on key drivers, create **models** for prediction, and apply the best ones for the purpose of curating some **predictions**. This will all be **summarized** and **recommendations** for Zillow will be provided. 
 For a more detailed breakdown of these steps please see the Final Report and workbooks provided. 
 
-### Wrangling (Not Done)
+### Wrangling 
 This section contains our acquisition and preparation of the data.
-#### Acquire (Not Done)
-The acquire.py file contains the code that was used for acquiring the 'telco_churn' data. There is a **get_db_url()** function that is used to format the credentials for interacting with a SQL server, and the **get_telco_data()** function that queries the SQL server for the data. For this project Codeup's 'telco_churn' SQL database was used. The env.py file used, and the credentials within, are not included in this project and as covered under _How To Reproduce_ must be curated with one's own information.
+#### Acquire
+The acquire.py file contains the code that was used for acquiring the 'zillow' data. There is a **get_db_url()** function that is used to format the credentials for interacting with a SQL server, and the **acquire_zillow()** function that queries the SQL server for the data. For this project Codeup's 'zillow' SQL database was used. The env.py file used, and the credentials within, are not included in this project and as covered under _How To Reproduce_ must be curated with one's own information.
 
-#### Preparation and Splitting (Not Done)
-The prepare.py file contains the code that was used for preparing the data. There is a **telco_split()** function that is used to create a train, validate, and test splits (3 dataframes) of the prepared dataframe. These splits are 56% train, 24% validate, and 20% test from the prepared dataframe. The **prep_telco()** function takes the acquired dataframe and cleans it for our exploratory purposes. Within this function the **telco_split()** function is utilized. 
+#### Preparation and Splitting
+The prepare.py file contains the code that was used for preparing the data. The **prepare_zillow()** function takes the acquired dataframe and cleans it for our exploratory purposes. For this dataset this includes the use of a **remove_outliers()** function, along with a **zillow_split()** function that provides our train, validate, and train dataframes. Although not part of the initial prepare function the **scale_zillow()** function is utilized to scale the data prior to modeling and for the later stages of exploration. 
 
 ### Exploration (Not Done)
 For exploration we used only our train dataframe. The explore.py file contains a number of functions that were used to help gain insights into our data, using both visual and statistical methods. We delved out the key factors of churn and curating train, validate, and test dataframes to include only these features. The main takeaways from exploration are that churn is most influenced by:
