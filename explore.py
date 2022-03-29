@@ -77,3 +77,9 @@ def cat_hists(train, cats):
         print('We fail to reject the null hypothesis.')
 
 
+def heatmap_zillow(train):
+    corr = train.corr()
+    matrix = np.triu(corr)
+    plt.figure(figsize=(16,9))
+    ax = sns.heatmap(corr, cmap='coolwarm', mask=matrix)
+    ax.set(title='Heatmap')
