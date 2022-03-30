@@ -21,14 +21,14 @@ def linear_tests(train, conts):
     for col in conts:
         # Creation of a jointplot using our target variable and the selected column
         sns.jointplot(y='tax_value', x=col, data=train, kind='scatter')
-        plt.xlabel= (f'{col}')
-        plt.ylabel= 'Tax Value'
+        plt.xlabel(f'{col}')
+        plt.ylabel('Tax Value')
         plt.show()
         # Creation of a lmplot using our target variable and the selected column
         sns.lmplot(x=col, y='tax_value', data=train, scatter=True, hue=None, col=None)
-        plt.xlabel= (f'{col}')
-        plt.ylabel= 'Tax Value'
-        plt.title=(f'{col} by Tax Value')
+        plt.xlabel(f'{col}')
+        plt.ylabel('Tax Value')
+        plt.title(f'{col} by Tax Value')
         plt.show()
         # Printing of our hypothesis surrounding the linear relationship between column and target variable
         print(f'H0: There is no linear relationship between {col} and tax value.')
