@@ -29,12 +29,12 @@ Through the identification of key drivers, application of these drivers to model
 
 ## How to Reproduce 
 To reproduce the outcomes in this project:
-1. Have an env.py file with credentials (hostname, username, password) to access a SQL database that contains Telco data. Codeup's 'zillow' data was utilized
+1. Have an env.py file with credentials (hostname, username, password) to access a SQL database that contains Zillow data. Codeup's 'zillow' data was utilized
    for this project. 
 2. Clone this repo and ensure you have all of the necessary modules and notebooks. Confirm that the .gitignore includes your env.py file to secure credentials.
 3. Use of these libraries: pandas, numpy, matplotlib, seaborn, sklearn.
 4. Be able to run the 'Final Report' jupyter notebook file. 
-   - Supplemental 'regression_workbook' may also be useful in identifying some of the steps taken prior to the cleaner final code 
+   - Supplemental regression workbooks may also be useful in identifying some of the steps taken prior to the cleaner final code 
 
 ## Initial Questions
 _What is our minimum viable product? (MVP)_
@@ -92,44 +92,40 @@ The acquire.py file contains the code that was used for acquiring the 'zillow' d
 #### Preparation and Splitting
 The prepare.py file contains the code that was used for preparing the data. The **prepare_zillow()** function takes the acquired dataframe and cleans it for our exploratory purposes. For this dataset this includes the use of a **remove_outliers()** function, along with a **zillow_split()** function that provides our train, validate, and train dataframes. Although not part of the initial prepare function the **scale_zillow()** function is utilized to scale the data prior to modeling and for the later stages of exploration. 
 
-### Exploration (Not Done)
-For exploration we used only our train dataframe. The explore.py file contains a number of functions that were used to help gain insights into our data, using both visual and statistical methods. We delved out the key factors of churn and curating train, validate, and test dataframes to include only these features. The main takeaways from exploration are that churn is most influenced by:
-- Fiber service
-- Not having a contract
-- Electronic check payment
-- Tenure (low duration)
-- Having a higher monthly cost
-- Being a senior citizen
+### Exploration 
+For exploration we used only our train dataframe. The explore.py file contains a number of functions that were used to help gain insights into our data, using both visual and statistical methods. We delved out the key factors shown to impact tax value and our train, validate, and test dataframes only include these features. The main takeaways from exploration are that tax value is influenced by:
+- bedrooms
+- bathrooms
+- house_area
+- lot_area
+- age
+- fips
 
-### Modeling (Not Done)
-We created a number of models from Decision Tree, Random Forest, K-Nearest Neighbor (KNN), and Logistic Regression types using our selected feature sets. Our report covers the top three performing models (1 KNN, 2 Random Forest) with the best performance being a Random Forest model. From this model we obtained a **90%** accuracy on our test dataframe. This is well above the baseline accuracy of 73% and means that this model should perform well on future unseen data as well.
+However, the biggest issue found with the Zillow data generally is that a lot of features that could possibly be deemed important were full of too many nulls to be useful in this project.
 
-### Deliverables (Not Done)
-The main deliverables from this project are the Final Report and the predictions csv. Additionally there are modules that contain the functions used and workbooks where a deeper exploration of the process can be seen.
+### Modeling
+We created a number of models that included Ordinary Least Squares (OLS), Lasso & Lars, Polynomial Regression (using LinearRegression), and a Generalized Linear Model (GLM, using TweedieRegressor) types using our selected feature sets. Our report covers the top three performing models with the best performance being the TweedieRegressor. From this model we obtained a **12%** improvement over the baseline, with a **$28,851.55** difference in prediction values. While this does perform better than not having a model, it is not a substantial enough improvement to recommend use for real world applications.
 
-#### Final Report (Not Done)
+### Deliverables
+The main deliverable from this project are the Final Report. Additionally there are modules that contain the functions used and workbooks where a deeper exploration of the process can be seen.
+
+#### Final Report
 The Final Report can be ran to reproduce the same results from start to finish. 
 
-#### Modules (Not Done)
+#### Modules
 The modules included in this project are:
 - acquire.py
 - prepare.py
 - explore.py
-- model.py
+- modeling.py
 
-#### Predictions (Not Done)
-The random_forest_csv() function in our model module will output the predictions for our test set from our best performing Random Forest model. It contains customer_id, prediction, and prediction probability. 
+#### Predictions
+The modeling.py module could be used/modified to show predictions and contains functions that alter the train, validate, and test dataframes to store the outcomes from the models. More specifically the y component (target variable) has the predictions added to their respective dataframes.
 
-### Summary and Recommendations (Not Done)
-We were successful at identifying some key drivers of churn that were:
-- Having Fiber service (Phone and Internet)
-- Not having a contract
-- Electronic check payment
-- Having a low tenure duration
-- Having a higher monthly cost
-- Being a senior citizen
+### Summary and Recommendations
+We were successful at identifying some key drivers that influence tax value, but do not feel that these features alone are enough to create a useful model. The source data has far too many nulls to make use of features that could possibly be deemed important. Among these are all of the add-on components of a house (such as pool, type of cooling/heating, etc...) or more specific locational data that are known to be important in determining the value of a house. 
 
-Moving forward the areas that would be the most impactful for Telco to take action on would be addressing the underlying issues with Fiber satisfaction. This group has the highest liklihood of churn and should be prioritized above all else. Additionally, looking at incentives that could have customers switch from Month to Month payments to a contract (preferably a Two year one) would have a large impact on churn. 
+Moving forward the recommendation is that Zillow work on fixing their gaps in data prior to attempts at creating useful models out of it. If this is not a possibility one could spend a large amount of time trying to impute, modify, or curate those gaps for them but this does not seem like the best route to take. In this instance data acquisition, at the source, is causing a bottle-neck in terms of possible utilities and opportunities.
 
 
 
