@@ -78,8 +78,23 @@ def cat_hists(train, cats):
 
 
 def heatmap_zillow(train):
+    '''
+    This function takes in our train dataframe and creates a correlation from it. This correlation is then mapped as a heatmap.
+    '''
+    # Creation and mapping of the correlation
     corr = train.corr()
+    # Separating the top half of the heatmap to laster mask
     matrix = np.triu(corr)
     plt.figure(figsize=(16,9))
     ax = sns.heatmap(corr, cmap='coolwarm', mask=matrix)
     ax.set(title='Heatmap')
+
+
+def scaled_relplot(train, conts):
+    '''
+    This function takes in our train dataframe and a list of continuous features. It then plots relplot (line) graphs of the data.
+    '''
+    # Looping through the list to form the relplots
+    for col in conts:
+        sns.relplot(y='tax_value', x=col, data=train, kind='line').set(title=(f'Tax Value by {col}'))
+        plt.show()
